@@ -1,102 +1,70 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Mt Buller Snow Dough App - MVP</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			background-color: #F2F2F2;
-		}
-		h1 {
-			color: #4F4F4F;
-			text-align: center;
-			margin-top: 50px;
-		}
-		form {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			margin-top: 50px;
-		}
-		label {
-			font-size: 20px;
-			color: #4F4F4F;
-			margin-bottom: 10px;
-		}
-		input[type="text"] {
-			padding: 10px;
-			font-size: 18px;
-			border-radius: 5px;
-			border: 1px solid #4F4F4F;
-			margin-bottom: 20px;
-			width: 400px;
-			max-width: 100%;
-			box-sizing: border-box;
-		}
-		button {
-			background-color: #0099FF;
-			color: #FFFFFF;
-			padding: 10px 20px;
-			font-size: 18px;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-			margin-bottom: 20px;
-			transition: background-color 0.3s ease-in-out;
-		}
-		button:hover {
-			background-color: #0077CC;
-		}
-		textarea {
-			padding: 10px;
-			font-size: 18px;
-			border-radius: 5px;
-			border: 1px solid #4F4F4F;
-			width: 400px;
-			max-width: 100%;
-			box-sizing: border-box;
-			resize: none;
-			height: 200px;
-		}
-		img {
-			display: block;
-			margin: auto;
-			margin-top: 50px;
-			max-width: 200px;
-			height: auto;
-		}
-	</style>
-</head>
-<body>
-	<h1>Mt Buller Snow Dough App - MVP</h1>
-	<form>
-		<label for="search">Search:</label>
-		<input type="text" id="search" placeholder="Enter text...">
-		<button id="searchBtn">Search Customers</button>
-		<textarea id="output" placeholder="Output"></textarea>
-	</form>
-	<img src="https://lightspeed-pos-assets.s3.amazonaws.com/lightspeed-logo.svg" alt="Lightspeed Commerce Logo">
-	<script>
-		const searchBtn = document.querySelector("#searchBtn");
-		const searchInput = document.querySelector("#search");
-		const outputTextarea = document.querySelector("#output");
-
-		searchBtn.addEventListener("click", async () => {
-			const query = searchInput.value.trim();
-			if (!query) {
-				return;
-			}
-
-			const url = `https://bull-ause-shared-apim.azure-api.net/unitytest/api/customers/search?Query=${encodeURIComponent(query)}&EmbedEntitlements=true`;
-			const headers = {
-				"Ocp-Apim-Subscription-Key": "d2691b94878b4335a755f8e3cf090348",
-				"unity-api-version": "3.0",
-			};
-
-			try {
-				const response = await fetch(url, { headers });
-				const data = await response.json();
-				outputTextarea.value = JSON.stringify(data, null, 2);
-			} catch (error) {
-				console.error(error);
-				outputTextarea
+  <head>
+    <title>Mt Buller Snow Dough App - MVP</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+      body {
+        padding: 50px;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Mt Buller Snow Dough App - MVP</h1>
+      <hr>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="form-group">
+            <label for="searchInput">Search Customers:</label>
+            <input type="text" class="form-control" id="searchInput" placeholder="Enter search text">
+          </div>
+          <button type="button" class="btn btn-primary" id="searchBtn">Search</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="form-group">
+            <label for="output">Output:</label>
+            <textarea class="form-control" id="output" rows="5" readonly></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $(document).ready(function() {
+        $('#searchBtn').click(function() {
+          var query = $('#searchInput').val();
+          if (query.trim() === '') {
+            $('#output').val('Please enter a search query.');
+            return;
+          }
+          var url = 'https://bull-ause-shared-apim.azure-api.net/unitytest/api/customers/search?Query=' + encodeURIComponent(query) + '&EmbedEntitlements=true';
+          $.ajax({
+            url: url,
+            headers: {
+              'Ocp-Apim-Subscription-Key': 'd2691b94878b4335a755f8e3cf090348',
+              'unity-api-version': '3.0'
+            }
+          })
+          .done(function(response) {
+            $('#output').val(JSON.stringify(response, null, 2));
+          })
+          .fail(function(jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status === 404) {
+              $('#output').val('Error: ' + jqXHR.statusText);
+            } else {
+              $('#output').val('Error: ' + textStatus + ', ' + errorThrown);
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
