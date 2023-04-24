@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Webhook Test</title>
+</head>
+<body>
+	<h1>Webhook Test</h1>
+	<button onclick="makeRequest()">Make Request</button>
+
+	<script>
+		function makeRequest() {
+			const url = 'https://webhook.site/df339190-3ce4-47e5-8e6c-b7699b19fbfb';
+			const data = {name: 'John Doe', email: 'johndoe@example.com'};
+			const options = {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(data)
+			};
+
+			fetch(url, options)
+				.then(response => console.log(response))
+				.catch(error => console.error(error));
+		}
+	</script>
+</body>
+</html>
