@@ -1,101 +1,99 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Mt Buller Snow Dough App - MVP</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-      .container {
-        max-width: 600px;
-        margin: 50px auto;
-        padding: 20px;
-        border: 2px solid #ddd;
-        border-radius: 5px;
-        text-align: center;
-      }
-      h1 {
-        margin-top: 0;
-        font-size: 36px;
-      }
-      input[type="text"] {
-        padding: 10px;
-        width: 70%;
-        border-radius: 5px;
-        border: none;
-        box-shadow: 0px 0px 5px #ddd;
-        margin-right: 10px;
-      }
-      button {
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: #fff;
-        border-radius: 5px;
-        border: none;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #0069d9;
-      }
-      .output {
-        margin-top: 20px;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        text-align: left;
-        height: 200px;
-        overflow-y: auto;
-      }
-      .error {
-        color: red;
-        margin-top: 10px;
-        font-weight: bold;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.lightspeedhq.com%2F&psig=AOvVaw2J4eE2_bMgeu_oJ_QDJyUH&ust=1682397024487000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCLDOl7rXwf4CFQAAAAAdAAAAABAE" alt="Lightspeed Commerce Logo">
-      <h1>Mt Buller Snow Dough App - MVP</h1>
-      <input type="text" id="search-bar" placeholder="Enter a customer name...">
-      <button id="search-btn">Search Customers</button>
-      <div class="output"></div>
-      <div class="error" style="display:none;">Error: Customer not found</div>
-    </div>
-    <script>
-      $(document).ready(function() {
-        $('#search-btn').on('click', function() {
-          var query = $('#search-bar').val();
-          $.ajax({
-            url: 'https://bull-ause-shared-apim.azure-api.net/unitytest/api/customers/search',
-            type: 'GET',
-            headers: {
-              'Ocp-Apim-Subscription-Key': 'd2691b94878b4335a755f8e3cf090348',
-              'unity-api-version': '3.0'
-            },
-            data: {
-              Query: query,
-              EmbedEntitlements: true
-            },
-            success: function(data) {
-              $('.error').hide();
-              var output = '';
-              $.each(data, function(index, value) {
-                output += '<div>' + value.FirstName + ' ' + value.LastName + ' - ' + value.EmailAddress + '</div>';
-              });
-              $('.output').html(output);
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-              if (jqXHR.status == 404) {
-                $('.error').show();
-              }
+<head>
+  <title>Mt Buller Snow Dough App - MVP</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+    }
+
+    #search-bar {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      width: 70%;
+      margin: 20px auto;
+    }
+
+    #search-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    #search-button:hover {
+      background-color: #3e8e41;
+    }
+
+    #output {
+      margin: 20px auto;
+      width: 70%;
+      height: 300px;
+      overflow-y: scroll;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    #error {
+      color: red;
+      font-weight: bold;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://www.lightspeedhq.com/themes/custom/lightspeed_hq/images/logo-white.svg" alt="Lightspeed Commerce Logo">
+  </header>
+  <div id="container">
+    <h1>Mt Buller Snow Dough App - MVP</h1>
+    <input type="text" id="search-bar" placeholder="Search for a customer...">
+    <button type="button" id="search-button">Search Customers</button>
+    <div id="output"></div>
+    <div id="error"></div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      $("#search-button").click(function() {
+        $("#output").html("");
+        $("#error").html("");
+
+        var query = $("#search-bar").val();
+        var url = "https://bull-ause-shared-apim.azure-api.net/unitytest/api/customers/search?Query=" + query + "&EmbedEntitlements=true";
+
+        $.ajax({
+          url: url,
+          headers: {
+            "Ocp-Apim-Subscription-Key": "123456",
+            "unity-api-version": "3.0"
+          },
+          method: "GET",
+          dataType: "json",
+          success: function(response) {
+            var output = "";
+            for (var i = 0; i < response.length; i++) {
+              output += "<p>" + response[i].firstName + " " + response[i].lastName + "</p>";
             }
-          });
+            $("#output").html(output);
+          },
+          error: function(xhr, status, error) {
+            if (xhr.status === 404) {
+              $("#error").html("Error 404: No results found for your query.");
+            } else {
+              $("#error").html("An error occurred while processing your request. Please try again later.");
+            }
+          }
         });
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
 </html>
