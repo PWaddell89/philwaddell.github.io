@@ -2,65 +2,96 @@
 <html>
   <head>
     <title>Mt Buller Snow Dough App - MVP</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
       body {
-        padding: 50px;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
       }
-      .form-group {
-        margin-bottom: 20px;
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        text-align: center;
+      }
+      h1 {
+        margin-top: 0;
+        font-size: 36px;
+      }
+      input[type="text"] {
+        padding: 10px;
+        width: 70%;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0px 0px 5px #ddd;
+        margin-right: 10px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0069d9;
+      }
+      .output {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-align: left;
+        height: 200px;
+        overflow-y: auto;
+      }
+      .error {
+        color: red;
+        margin-top: 10px;
+        font-weight: bold;
       }
     </style>
   </head>
   <body>
     <div class="container">
+      <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.lightspeedhq.com%2F&psig=AOvVaw2J4eE2_bMgeu_oJ_QDJyUH&ust=1682397024487000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCLDOl7rXwf4CFQAAAAAdAAAAABAE" alt="Lightspeed Commerce Logo">
       <h1>Mt Buller Snow Dough App - MVP</h1>
-      <hr>
-      <div class="row">
-        <div class="col-md-8">
-          <div class="form-group">
-            <label for="searchInput">Search Customers:</label>
-            <input type="text" class="form-control" id="searchInput" placeholder="Enter search text">
-          </div>
-          <button type="button" class="btn btn-primary" id="searchBtn">Search</button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8">
-          <div class="form-group">
-            <label for="output">Output:</label>
-            <textarea class="form-control" id="output" rows="5" readonly></textarea>
-          </div>
-        </div>
-      </div>
+      <input type="text" id="search-bar" placeholder="Enter a customer name...">
+      <button id="search-btn">Search Customers</button>
+      <div class="output"></div>
+      <div class="error" style="display:none;">Error: Customer not found</div>
     </div>
     <script>
       $(document).ready(function() {
-        $('#searchBtn').click(function() {
-          var query = $('#searchInput').val();
-          if (query.trim() === '') {
-            $('#output').val('Please enter a search query.');
-            return;
-          }
-          var url = 'https://bull-ause-shared-apim.azure-api.net/unitytest/api/customers/search?Query=' + encodeURIComponent(query) + '&EmbedEntitlements=true';
+        $('#search-btn').on('click', function() {
+          var query = $('#search-bar').val();
           $.ajax({
-            url: url,
+            url: 'https://bull-ause-shared-apim.azure-api.net/unitytest/api/customers/search',
+            type: 'GET',
             headers: {
               'Ocp-Apim-Subscription-Key': 'd2691b94878b4335a755f8e3cf090348',
               'unity-api-version': '3.0'
-            }
-          })
-          .done(function(response) {
-            $('#output').val(JSON.stringify(response, null, 2));
-          })
-          .fail(function(jqXHR, textStatus, errorThrown) {
-            if (jqXHR.status === 404) {
-              $('#output').val('Error: ' + jqXHR.statusText);
-            } else {
-              $('#output').val('Error: ' + textStatus + ', ' + errorThrown);
+            },
+            data: {
+              Query: query,
+              EmbedEntitlements: true
+            },
+            success: function(data) {
+              $('.error').hide();
+              var output = '';
+              $.each(data, function(index, value) {
+                output += '<div>' + value.FirstName + ' ' + value.LastName + ' - ' + value.EmailAddress + '</div>';
+              });
+              $('.output').html(output);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+              if (jqXHR.status == 404) {
+                $('.error').show();
+              }
             }
           });
         });
