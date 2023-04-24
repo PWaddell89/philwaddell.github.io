@@ -72,7 +72,7 @@
         $.ajax({
           url: url,
           headers: {
-            "Ocp-Apim-Subscription-Key": "123456",
+            "Ocp-Apim-Subscription-Key": "d2691b94878b4335a755f8e3cf090348",
             "unity-api-version": "3.0"
           },
           method: "GET",
@@ -80,7 +80,7 @@
           success: function(response) {
             var output = "";
             for (var i = 0; i < response.length; i++) {
-              output += "<p>" + response[i].firstName + " " + response[i].lastName + "</p>";
+              output += "<p>" + response[i] + " " + response[i] + "</p>";
             }
             $("#output").html(output);
           },
