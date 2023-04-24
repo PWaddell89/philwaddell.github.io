@@ -2,37 +2,75 @@
 <html>
 <head>
 	<title>Mt Buller Snow Dough App - MVP</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
-		function submitForm() {
-			var searchQuery = document.getElementById("searchQuery").value;
-			var webhookURL = "https://api.retool.com/v1/workflows/b6c39ed1-ddc7-48c4-ab98-c35803d06067/startTrigger?workflowApiKey=retool_wk_262c1a56708b4441a7c3656faa598fb1&searchQuery=" + searchQuery;
-
-			fetch(webhookURL)
-				.then(response => response.json())
-				.then(data => {
-					var outputText = JSON.stringify(data);
-					document.getElementById("output").innerHTML = outputText;
-				})
-				.catch(error => {
-					console.error('Error:', error);
-					document.getElementById("output").innerHTML = "An error occurred while processing your request.";
-				});
+		function searchCustomers() {
+			const url = 'https://api.retool.com/v1/workflows/b6c39ed1-ddc7-48c4-ab98-c35803d06067/startTrigger?workflowApiKey=retool_wk_262c1a56708b4441a7c3656faa598fb1';
+			const query = $('#searchBar').val();
+			$.ajax({
+				url: url,
+				type: 'POST',
+				dataType: 'json',
+				data: { Query: query },
+				success: function(data) {
+					console.log(data);
+					$('#output').text(JSON.stringify(data));
+				},
+				error: function(xhr, status, error) {
+					console.error(xhr);
+					$('#output').text('Error: ' + error);
+				}
+			});
 		}
 	</script>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+		}
+		h1 {
+			text-align: center;
+		}
+		form {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			margin: 20px;
+		}
+		input[type=text] {
+			padding: 10px;
+			margin-right: 10px;
+			border-radius: 5px;
+			border: none;
+			width: 60%;
+		}
+		input[type=button] {
+			padding: 10px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		input[type=button]:hover {
+			background-color: #45a049;
+		}
+		#output {
+			margin: 20px;
+			padding: 20px;
+			border-radius: 5px;
+			border: 1px solid #ddd;
+			background-color: #f9f9f9;
+			word-wrap: break-word;
+		}
+	</style>
 </head>
 <body>
-	<header>
-		<img src="https://www.lightspeedhq.com/wp-content/uploads/2017/05/LS_logo_RGB_Small-300x75.png" alt="Lightspeed Commerce logo">
-	</header>
-	<main>
-		<h1>Mt Buller Snow Dough App - MVP</h1>
-		<form>
-			<label for="searchQuery">Search Customers:</label>
-			<input type="text" id="searchQuery" name="searchQuery" required>
-			<button type="button" onclick="submitForm()">Search Customers</button>
-		</form>
-		<div id="output"></div>
-	</main>
+	<h1>Mt Buller Snow Dough App - MVP</h1>
+	<form>
+		<input type="text" id="searchBar" placeholder="Search...">
+		<input type="button" value="Search Customers" onclick="searchCustomers()">
+	</form>
+	<div id="output"></div>
 </body>
 </html>
