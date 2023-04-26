@@ -13,7 +13,7 @@
         const businessId = posContext.businessId;
        document.getElementById("list-context-content").innerHTML = "<pre class='text-white'>"+JSON.stringify(posContext, undefined, 2)+"</pre>";
         if (businessId === '12345') {
-          const embedUrl = "https://lsapacproserv.retool.com/embedded/public/ca58c0d0-2e4a-4a21-8feb-0a5a704ea02b";
+          const embedUrl = "https://lsapacproserv.retool.com/apps/Pro%20Services%20Testing/Buller%20SnowDollars";
           document.getElementById("embed-container").innerHTML = "<iframe src='" + embedUrl + "'></iframe>";
         } else {
           document.getElementById("unauthorized-message").style.display = "block";
