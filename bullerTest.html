@@ -5,35 +5,33 @@
   </head>
   <body onload="loadPage()">
     <div id="list-context-content"></div>
-    <div id="iframe-container"></div>
+    <div id="embed-container"></div>
     <div id="unauthorized-message" style="display:none">Unauthorized Access</div>
+    <div id="response"></div> <!-- Add a div to show the response -->
     
     <script>
-      function checkBusinessId(posContext) {
-        if (posContext.businessId === "56806") {
-          // Business ID is 56806
-          return "authorized";
-        } else {
-          // Business ID is not 56806
-          return "unauthorized";
-        }
-      }
-      
-      function loadPage() {
-        document.getElementById("list-context-content").innerHTML = "<pre class='text-white'>"+JSON.stringify(posContext, undefined, 2)+"</pre>";
-        
-        var result = checkBusinessId(posContext);
-        
-        if (result === "authorized") {
-          var iframe = document.createElement('iframe');
-          iframe.src = 'https://lsapacproserv.retool.com/apps/Pro%20Services%20Testing/Buller%20SnowDollars';
-          iframe.width = '100%';
-          iframe.height = '800px';
-          document.getElementById("iframe-container").appendChild(iframe);
-        } else {
-          document.getElementById("unauthorized-message").style.display = "block";
-        }
-      }
+    
+    function checkBusinessId(posContext) {
+     if (posContext.businessId === "56806") {
+      // Business ID is 56806
+      return "Authorized";
+     } else {
+      // Business ID is not 56806
+      return "Unauthorized";
+     }
+    }
+    
+    function printContext() {
+     document.getElementById("list-context-content").innerHTML = "<pre class='text-white'>"+JSON.stringify(posContext, undefined, 2)+"</pre>";
+     
+     // Check business ID and show response in a div
+     var response = checkBusinessId(posContext);
+     document.getElementById("response").innerHTML = response;
+    }
+    
+    function loadPage() {
+        printContext();
+    }
     </script>
   </body>
 </html>
