@@ -38,13 +38,13 @@
   //POS NATIVE FUNCTIONS
   //PRINT POS CONTEXT
     function printContext() {
-    document.getElementById("dataDiv").innerHTML = "<pre class='text-white'>"+JSON.stringify(posContext, undefined, 2)+"</pre>"
+    document.getElementById("dataDiv").innerHTML = "<pre class='text-black'>"+JSON.stringify(posContext, undefined, 2)+"</pre>"
     }
     
      //GET CURRENT ACCOUNT DETAILS
       function getCurrentAccount() {
         const printResult = function (response) {
-          document.getElementById("dataDivCurrentAccount").innerHTML = "<pre class='text-white'>"+JSON.stringify(response.data, undefined, 2)+"</pre>"
+          document.getElementById("dataDivCurrentAccount").innerHTML = "<pre class='text-black'>"+JSON.stringify(response.data, undefined, 2)+"</pre>"
         };
         pos_getCurrentAccount(printResult)
       }
@@ -58,7 +58,7 @@
   </head>
   <body>
     <div style="height: 800px; width: 100%;" id="container"></div>
-    <div id="dataDiv" style ="display:none;"></div>
-    <div id="dataDivCurrentAccount"style ="display:none;"></div>
+    <div id="dataDiv"></div>
+    <div id="dataDivCurrentAccount"></div>
   </body>
 </html>
