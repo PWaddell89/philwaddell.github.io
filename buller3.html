@@ -49,5 +49,34 @@
     <div style="height: 800px; width: 100%;" id="container"></div>
     <div id="dataDiv" style ="display:none;"></div>
     <div id="dataDivCurrentAccount"style ="display:none;"></div>
-  </body>
+<div class="card bg-dark mb-3">
+                <div class="card-header text-white">Code Example</div>
+                <div class="card-body">
+                  <p class="card-text">
+                    <pre class="fs-6">
+                      <code class="language-javascript text-white">
+                        function pos_payAccount(paymentMethodCode, callback) {
+                          const callbackId = pos_generateCallbackId()
+                          callbacks[callbackId] = callback
+                      
+                          const data = {
+                              name : 'payAccount',
+                              args : { paymentMethodCode, callbackId }
+                          }
+                      
+                          pos_postMessage(data)
+                      }
+                      Pays for the current account.
+                      
+                      @param {string} paymentMethodCode
+                      Reference code used to identify the payment method to use when paying for the current account.
+                      
+                      @param {posCallback} callback
+                      The callback that will be invoked when the native function is done executing.  
+                      </code>
+                    </pre>
+                  </p>
+                </div>
+              </div>
+            </div>
 </html>
