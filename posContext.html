@@ -28,12 +28,9 @@
   "businessId": "56806"
 })
       document.getElementById("dataDiv").innerHTML = data;
-     window.addEventListener("message", function(event) {
-  if (event.origin !== "https://pwaddell89.github.io") {
-    return;
-  }
-  console.log("Received message from iframe: " + event.data);
-  // do something with the received data here
+window.addEventListener("message", function(event) {
+  console.log("Parent window received: ", event.data);
+  // Handle the received data here
 }, false);
     </script>
   </body>
