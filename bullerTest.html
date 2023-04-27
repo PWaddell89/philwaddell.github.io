@@ -11,23 +11,23 @@
     
     <script>
     
-    function checkBusinessId(posContext) {
-     if (posContext.businessId === "56806") {
+   // function checkBusinessId(posContext) {
+   //  if (posContext.businessId === "56806") {
       // Business ID is 56806
-      return "Authorized";
-     } else {
+  //    return "Authorized";
+   //  } else {
       // Business ID is not 56806
-      return "Unauthorized";
-     }
-    }
+  //    return "Unauthorized";
+   //  }
+   // }
     
     function printContext() {
      document.getElementById("list-context-content").innerHTML = "<pre class='text-white'>"+JSON.stringify(posContext, undefined, 2)+"</pre>";
      
      // Check business ID and show response in a div
-     var response = checkBusinessId(posContext);
-     document.getElementById("response").innerHTML = response;
-    }
+   //  var response = checkBusinessId(posContext);
+    // document.getElementById("response").innerHTML = response;
+   // }
     
     function loadPage() {
         printContext();
