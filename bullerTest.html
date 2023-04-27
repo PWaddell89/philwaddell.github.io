@@ -4,6 +4,23 @@
     <title>My Page</title>
   </head>
   <body>
-    <iframe src="https://lsapacproserv.retool.com/apps/Pro%20Services%20Testing/Buller%20SnowDollars" width="100%" height="800px"></iframe>
+    <div id="retool-embed-container">
+      <iframe src="https://lsapacproserv.retool.com/apps/Pro%20Services%20Testing/Buller%20SnowDollars" width="100%" height="800px"></iframe>
+    </div>
+    <div>
+      <button onclick="printContext()">Print posContext</button>
+    </div>
+    <div id="list-context-content"></div>
+
+    <script>
+      // POS NATIVE FUNCTIONS
+      // PRINT POS CONTEXT
+      function printContext() {
+        document.getElementById("list-context-content").innerHTML =
+          "<pre class='text-white'>" +
+          JSON.stringify(posContext, undefined, 2) +
+          "</pre>";
+      }
+    </script>
   </body>
 </html>
