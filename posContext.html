@@ -27,13 +27,18 @@
   "businessId": "56806"
 })
       document.getElementById("dataDiv").innerHTML = data;
-      window.addEventListener(
-  "message",
-  function (e) {
-    console.log("Parent window received: ", e.data);
-  },
-  false
-);
+  // Wait for the page to finish loading
+  window.addEventListener("load", function() {
+    // Listen for a message event from the embedded ReTool app
+    window.addEventListener("message", function(event) {
+      // Check if the message came from the ReTool app
+      if (event.origin === "https://lsapacproserv.retool.com") {
+        // Get the data sent by the ReTool app
+        var data = event.data;
+        console.log("Received data:", data);
+      }
+    });
+  });
     </script>
   </body>
 </html>
