@@ -13,7 +13,7 @@
         const businessId = posContext.businessId;
        document.getElementById("list-context-content").innerHTML = "<pre class='text-white'>"+JSON.stringify(posContext, undefined, 2)+"</pre>";
        // if (businessId === "56806") {
-          const embedUrl = "https://lsapacproserv.retool.com/apps/Pro%20Services%20Testing/Buller%20SnowDollars?posContext=" + encodeURIComponent(JSON.stringify(posContext));
+          const embedUrl = "https://lsapacproserv.retool.com/apps/Pro%20Services%20Testing/Buller%20SnowDollars";//?posContext=" + encodeURIComponent(JSON.stringify(posContext));
           document.getElementById("embed-container").innerHTML = "<iframe src='" + embedUrl + "'></iframe>";
        // } else {
        //   document.getElementById("unauthorized-message").style.display = "block";
