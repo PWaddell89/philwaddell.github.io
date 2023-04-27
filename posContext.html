@@ -37,7 +37,7 @@
         // Get the data sent by the ReTool app
         var data = event.data;
         console.log("Received data:", data);
-        document.getElementById("responseDiv").innerHTML = event.data;
+        document.getElementById("responseDiv").innerHTML = JSON.stringify(event.data);
       }
     });
   });
