@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Lightspeed K-Series Web Extension Demo</title>
   <meta name="viewport"
@@ -23,7 +22,11 @@
     integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
     crossorigin="anonymous"></script>
      <script src="https://cdn.tryretool.com/embed.js"></script>
-  <scipt window.addEventListener('load', printContext);</script>
+  <script>
+  window.addEventListener('load', function() {
+    printContext();
+  });
+</script>
   <style>
     @media(min-width: 768px) {
       .flex {
