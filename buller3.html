@@ -27,11 +27,9 @@
   //POS NATIVE FUNCTIONS
   //PRINT POS CONTEXT
     function printContext() {
-    document.getElementById("dataDivPOSContext").innerHTML = "<pre class='text-white'>"+JSON.stringify(posContext, undefined, 2)+"</pre>"
+    document.getElementById("dataDiv").innerHTML = "<pre class='text-white'>"+JSON.stringify(posContext, undefined, 2)+"</pre>"
     }
-      var rt =window.retool.RetoolDashboard(document.getElementById('container'),
-      'https://lsapacproserv.retool.com/embedded/public/f095bb33-7a9e-4fba-a294-c566cfc150a4')
-      
+    
      //GET CURRENT ACCOUNT DETAILS
       function getCurrentAccount() {
         const printResult = function (response) {
@@ -39,13 +37,17 @@
         };
         pos_getCurrentAccount(printResult)
       }
+      
+      var rt =window.retool.RetoolDashboard(document.getElementById('container'),
+      'https://lsapacproserv.retool.com/embedded/public/f095bb33-7a9e-4fba-a294-c566cfc150a4')
+      
     window.addEventListener('load', printContext);
     window.addEventListener('load', getCurrentAccount);
   </script>
   </head>
   <body>
     <div style="height: 800px; width: 100%;" id="container"></div>
-    <div id="dataDivPOSContext" style ="display:none;"></div>
+    <div id="dataDiv" style ="display:none;"></div>
     <div id="dataDivCurrentAccount"style ="display:none;"></div>
   </body>
 </html>
