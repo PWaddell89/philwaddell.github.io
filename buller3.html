@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Page</title>
+  </head>
+  <body onload="loadPage()">
+    <div id="list-context-content"></div>
+    <div id="embed-container"></div>
+    <div id="unauthorized-message" style="display:none">Unauthorized Access</div>
+    
+    <script>
+      function loadPage() {
+        const posContext = {
+          "businessName": "INTERNAL // Phil Waddell",
+          "theme": {
+            "darkMode": true
+          },
+          "locationName": "INTERNAL // Phil Waddell",
+          "keypadMultiplier": 0,
+          "configurationName": "Fixed POS",
+          "deviceRestrictedScope": false,
+          "deviceId": "70214",
+          "keypadAmount": 0,
+          "userId": "174121",
+          "userName": "Phil Waddell",
+          "deviceName": "iPad6",
+          "periodNumber": 225,
+          "locationId": "975928238800898",
+          "businessId": "56806"
+        };
+
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://lsapacproserv.retool.com/apps/Pro%20Services%20Testing/Buller%20SnowDollars';
+        iframe.width = '100%';
+        iframe.height = '800px';
+        iframe.id = 'retool-iframe';
+        iframe.onload = function() {
+          const retoolWindow = document.getElementById('retool-iframe').contentWindow;
+          retoolWindow.postMessage(posContext, 'https://lsapacproserv.retool.com');
+        };
+        document.getElementById('embed-container').appendChild(iframe);
+        
+        printContext();
+      }
+    </script>
+  </body>
+</html>
