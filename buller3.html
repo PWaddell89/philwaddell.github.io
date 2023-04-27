@@ -1,6 +1,38 @@
 <html>
   <head>
-    <script src="https://cdn.tryretool.com/embed.js"> </script>
+    <script src="https://cdn.tryretool.com/embed.js">
+     
+        function syntaxHighlight(json) {
+    if (typeof json != 'string') {
+      json = JSON.stringify(json, undefined, 2);
+    }
+    json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+      var cls = 'number';
+      if (/^"/.test(match)) {
+        if (/:$/.test(match)) {
+          cls = 'key';
+        } else {
+          cls = 'string';
+        }
+      } else if (/true|false/.test(match)) {
+        cls = 'boolean';
+      } else if (/null/.test(match)) {
+        cls = 'null';
+      }
+      return '<span class="' + cls + '">' + match + '</span>';
+    });
+  }
+
+  //POS NATIVE FUNCTIONS
+  //PRINT POS CONTEXT
+    function printContext() {
+    document.getElementById("dataDiv").innerHTML = "<pre class='text-white'>"+JSON.stringify(posContext, undefined, 2)+"</pre>"
+    }
+      var rt =window.retool.RetoolDashboard(document.getElementById('container'),
+      'https://lsapacproserv.retool.com/embedded/public/f095bb33-7a9e-4fba-a294-c566cfc150a4')
+    window.addEventListener('load', printContext);
+  </script>
   </head>
   <body>
     <div style="height: 800px; width: 100%;" id="container"></div>
