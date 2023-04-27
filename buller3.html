@@ -7,6 +7,7 @@
     <div id="list-context-content"></div>
     <div id="embed-container"></div>
     <div id="unauthorized-message" style="display:none">Unauthorized Access</div>
+    <div id="pos-context"></div>
     
     <script>
       function loadPage() {
@@ -39,7 +40,8 @@
           retoolWindow.postMessage(posContext, 'https://lsapacproserv.retool.com');
         };
         document.getElementById('embed-container').appendChild(iframe);
-        
+        document.getElementById('pos-context').innerHTML = JSON.stringify(posContext);
+
         printContext();
       }
     </script>
