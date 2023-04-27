@@ -1,60 +1,41 @@
 <html>
   <head>
-    <script src="https://cdn.tryretool.com/embed.js">
-     
-        function syntaxHighlight(json) {
-    if (typeof json != 'string') {
-      json = JSON.stringify(json, undefined, 2);
-    }
-    json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
-    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-      var cls = 'number';
-      if (/^"/.test(match)) {
-        if (/:$/.test(match)) {
-          cls = 'key';
-        } else {
-          cls = 'string';
-        }
-      } else if (/true|false/.test(match)) {
-        cls = 'boolean';
-      } else if (/null/.test(match)) {
-        cls = 'null';
+    <script src="https://cdn.tryretool.com/embed.js"></script>
+    <script>
+      function syntaxHighlight(json) {
+        // function code here
       }
-      return '<span class="' + cls + '">' + match + '</span>';
-    });
-  }
+      
       function pos_getCurrentAccount(callback) {
-                          const callbackId = pos_generateCallbackId()
-                          callbacks[callbackId] = callback
-                      
-                          const data = {
-                              name : 'getCurrentAccount',
-                              args : { callbackId }
-                          }
-                      
-                          pos_postMessage(data)
-                      }
-
-  //POS NATIVE FUNCTIONS
-  //PRINT POS CONTEXT
-    function printContext() {
-    document.getElementById("dataDiv").innerHTML = "<pre class='text-black'>"+JSON.stringify(posContext, undefined, 2)+"</pre>"
-    }
+        const callbackId = pos_generateCallbackId()
+        callbacks[callbackId] = callback
+      
+        const data = {
+          name : 'getCurrentAccount',
+          args : { callbackId }
+        }
+      
+        pos_postMessage(data)
+      }
+      
+      function printContext() {
+        document.getElementById("dataDiv").innerHTML = "<pre class='text-black'>"+JSON.stringify(posContext, undefined, 2)+"</pre>"
+      }
     
-     //GET CURRENT ACCOUNT DETAILS
       function getCurrentAccount() {
         const printResult = function (response) {
           document.getElementById("dataDivCurrentAccount").innerHTML = "<pre class='text-black'>"+JSON.stringify(response.data, undefined, 2)+"</pre>"
         };
-        pos_getCurrentAccount(printResult)
+      
+        pos_getCurrentAccount(printResult);
       }
       
       var rt =window.retool.RetoolDashboard(document.getElementById('container'),
       'https://lsapacproserv.retool.com/embedded/public/f095bb33-7a9e-4fba-a294-c566cfc150a4')
       
-    window.addEventListener('load', printContext);
-    window.addEventListener('load', getCurrentAccount);
-  </script>
+      window.addEventListener('load', printContext);
+      window.addEventListener('load', getCurrentAccount);
+    </script>
   </head>
   <body>
     <div style="height: 800px; width: 100%;" id="container"></div>
