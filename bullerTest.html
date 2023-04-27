@@ -8,30 +8,74 @@
     <div id="embed-container"></div>
     <div id="unauthorized-message" style="display:none">Unauthorized Access</div>
     <div id="response"></div> <!-- Add a div to show the response -->
-    
+      <div class="col-4 bg-white">
+          <div class="list-group" id="list-tab" role="tablist">
+            <h3>POS DATA</h3>
+            <a class="list-group-item list-group-item-action list-group-item-dark" id="list-context-list" fId="printContext()" data-toggle="list" href="#list-context" role="tab" aria-controls="context">Show POS Context</a>
+          </div>
+      </div>
+          <!--TAB CONTENTs-->
+      <div class="col-8 bg-white">
+          <div class="tab-content" id="nav-tabContent">
+            <!-- ERROR MESSAGE ALERT-->
+            <div class="alert alert-danger alert-dismissible fade hide" role="alert" id="errorAlert">
+            </div>
+            <!--POS DATA-->
+            <!--Show POS Context-->
+            <div class="tab-pane fade show" role="tabpanel" aria-labelledby="list-context-list" id="list-context">
+              <div class="card text-white bg-dark mb-3">
+                <div class="card-header">POS Context</div>
+                <div class="card-body">
+                  <div id="list-context-content"></div>
+                </div>
+              </div>
+              <div class="card bg-dark">
+                <div class="card-header text-white">Code Example</div>
+                <div class="card-body">
+                  <p class="card-text">
+                    <pre class="fs-6 pretty-printed">
+                      <code class="language-javascript text-white">
+                      posContext.businessId
+                      posContext.businessName
+                      posContext.locationId
+                      posContext.deviceName
+                      posContext.deviceId
+                      posContext.userName
+                      posContext.userId
+                      </code>
+                </pre>
+                  </p>
+                </div>
+              </div>
+            </div>
     <script>
-    
-   // function checkBusinessId(posContext) {
-   //  if (posContext.businessId === "56806") {
-      // Business ID is 56806
-  //    return "Authorized";
-   //  } else {
-      // Business ID is not 56806
-  //    return "Unauthorized";
-   //  }
-   // }
-    
-    function printContext() {
-     document.getElementById("list-context-content").innerHTML = "<pre class='text-white'>"+JSON.stringify(posContext, undefined, 2)+"</pre>";
-     
-     // Check business ID and show response in a div
-   //  var response = checkBusinessId(posContext);
-    // document.getElementById("response").innerHTML = response;
-   // }
-    
-    function loadPage() {
-        printContext();
-    }
+      function syntaxHighlight(json) {
+        if (typeof json != 'string') {
+          json = JSON.stringify(json, undefined, 2);
+        }
+        json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+          var cls = 'number';
+          if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+              cls = 'key';
+            } else {
+              cls = 'string';
+            }
+          } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+          } else if (/null/.test(match)) {
+            cls = 'null';
+          }
+          return '<span class="' + cls + '">' + match + '</span>';
+        });
+      }
+
+      //POS NATIVE FUNCTIONS
+      //PRINT POS CONTEXT
+      function printContext() {
+        document.getElementById("list-context-content").innerHTML = "<pre class='text-white'>"+JSON.stringify(posContext, undefined, 2)+"</pre>"
+      }
     </script>
   </body>
 </html>
