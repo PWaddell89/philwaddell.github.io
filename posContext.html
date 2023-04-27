@@ -5,6 +5,7 @@
   <body>
     <div style="height: 800px; width: 100%;" id="container"></div>
     <div id="dataDiv" style ="display:none;"></div>
+    <div id="responseDiv"></div>
     <script>
       var rt =window.retool.RetoolDashboard(document.getElementById('container'),
       'https://lsapacproserv.retool.com/embedded/public/f095bb33-7a9e-4fba-a294-c566cfc150a4')
@@ -36,6 +37,7 @@
         // Get the data sent by the ReTool app
         var data = event.data;
         console.log("Received data:", data);
+        document.getElementById("responseDiv").innerHTML = e.data;
       }
     });
   });
