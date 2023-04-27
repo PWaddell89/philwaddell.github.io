@@ -4,12 +4,36 @@
   </head>
   <body>
     <div style="height: 800px; width: 100%;" id="container"></div>
-    <div id="dataDiv"></div>
+    <div id="dataDiv" style ="display:none;"></div>
     <script>
       var rt =window.retool.RetoolDashboard(document.getElementById('container'),
       'https://lsapacproserv.retool.com/embedded/public/f095bb33-7a9e-4fba-a294-c566cfc150a4')
-      var data = posContext
+      var data = JSON.stringify({
+  "businessName": "INTERNAL // Phil Waddell",
+  "theme": {
+    "darkMode": true
+  },
+  "locationName": "INTERNAL // Phil Waddell",
+  "keypadMultiplier": 0,
+  "configurationName": "Fixed POS",
+  "deviceRestrictedScope": false,
+  "deviceId": "70214",
+  "keypadAmount": 0,
+  "userId": "174121",
+  "userName": "Phil Waddell",
+  "deviceName": "iPad6",
+  "periodNumber": 225,
+  "locationId": "975928238800898",
+  "businessId": "56806"
+})
       document.getElementById("dataDiv").innerHTML = data;
+      window.addEventListener(
+  "message",
+  function (e) {
+    console.log("Parent window received: ", e.data);
+  },
+  false
+);
     </script>
   </body>
 </html>
