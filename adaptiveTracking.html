@@ -16,10 +16,10 @@
             var longitude = position.coords.longitude;
             var speed = position.coords.speed;
 
-            // Process latitude, longitude, and speed values as needed
-            console.log("Latitude: " + latitude);
-            console.log("Longitude: " + longitude);
-            console.log("Speed: " + speed);
+            // Update the values in the HTML div
+            document.getElementById("latitude").textContent = "Latitude: " + latitude;
+            document.getElementById("longitude").textContent = "Longitude: " + longitude;
+            document.getElementById("speed").textContent = "Speed: " + speed;
         }
 
         function onError(error) {
@@ -32,5 +32,11 @@
 <body>
     <h1>GPS Navigation</h1>
     <button onclick="getLocation()">Get Location</button>
+
+    <div id="locationData">
+        <p id="latitude"></p>
+        <p id="longitude"></p>
+        <p id="speed"></p>
+    </div>
 </body>
 </html>
