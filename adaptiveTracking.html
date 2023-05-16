@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GPS Navigation</title>
+    <script type="text/javascript">
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(onSuccess, onError);
+            } else {
+                console.log("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function onSuccess(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            var speed = position.coords.speed;
+
+            // Process latitude, longitude, and speed values as needed
+            console.log("Latitude: " + latitude);
+            console.log("Longitude: " + longitude);
+            console.log("Speed: " + speed);
+        }
+
+        function onError(error) {
+            // Handle errors if GPS data cannot be accessed
+            console.log("Error code: " + error.code);
+            console.log("Error message: " + error.message);
+        }
+    </script>
+</head>
+<body>
+    <h1>GPS Navigation</h1>
+    <button onclick="getLocation()">Get Location</button>
+</body>
+</html>
