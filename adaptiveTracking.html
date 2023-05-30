@@ -3,6 +3,14 @@
 <head>
     <title>GPS Navigation</title>
     <script type="text/javascript">
+        function checkGeolocationSupport() {
+            if (navigator.geolocation) {
+                console.log("Geolocation is supported in this browser.");
+            } else {
+                console.log("Geolocation is not supported in this browser.");
+            }
+        }
+
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.watchPosition(onSuccess, onError);
@@ -15,11 +23,13 @@
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
             var speed = position.coords.speed;
+            var altitude = position.coords.altitude;
 
             // Update the values in the HTML div
             document.getElementById("latitude").textContent = "Latitude: " + latitude;
             document.getElementById("longitude").textContent = "Longitude: " + longitude;
             document.getElementById("speed").textContent = "Speed: " + speed;
+            document.getElementById("altitude").textContent = "Altitude: " + altitude;
         }
 
         function onError(error) {
@@ -31,12 +41,14 @@
 </head>
 <body>
     <h1>GPS Navigation</h1>
+    <button onclick="checkGeolocationSupport()">Check Geolocation Support</button>
     <button onclick="getLocation()">Get Location</button>
 
     <div id="locationData">
         <p id="latitude"></p>
         <p id="longitude"></p>
         <p id="speed"></p>
+        <p id="altitude"></p>
     </div>
 </body>
 </html>
